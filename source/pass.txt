@@ -1,0 +1,3 @@
+admin, pass: admin
+John, pass: 1qaz@wsx29
+Ivan, pass: 1qaz@wsx29
