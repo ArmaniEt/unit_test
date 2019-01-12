@@ -33,8 +33,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'accounts:login' %}">Вход</a>
                 </li>
+                 <li class="nav-item">
+                    <a href="{% url 'webapp:index' %}" class="nav-link">Новости</a>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Список пользователей</a>
+                    <a class="nav-link" href="{% url 'webapp:user_list' %}">Список пользователей</a>
                 </li>
             {% endif %}
         </ul>

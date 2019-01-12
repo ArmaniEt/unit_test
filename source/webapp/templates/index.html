@@ -3,6 +3,9 @@
 {% block menu %}
     <li class="nav_item"><a href="{% url 'webapp:post_create' %}" class="nav-link">Добавить статью</a></li>
     <li class="nav_item"><a href="{% url 'webapp:user_list' %}" class="nav-link">Список пользователей</a></li>
+    {% if request.user.is_authenticated %}
+        <li class="nav_item"><a href="{% url 'webapp:user_detail' request.user.user_inf.pk %}" class="nav-link">Личный кабинет</a></li>
+    {% endif %}
 {% endblock %}
 
 {% block content %}

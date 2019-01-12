@@ -70,8 +70,24 @@ class UserDetailView(DetailView):
     template_name = 'user_detail_view.html'
     model = UserInfo
 
+    """
+    trying to override method
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(UserInfo, pk=kwargs.get('pk'))
+        context['foo'] = 'bar'
+        return context  
+    """
+
+
 
 class UserUpdateView(UpdateView):
     template_name = 'user_update.html'
     model = UserInfo
     form_class = UserForm
+
+    def dispatch(self, request,  *args, **kwargs):
+        user = get_object_or_404(UserInfo, pk=kwargs.get('pk'))
+        if user.user == request.user:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise Http404

@@ -9,7 +9,7 @@
         <div class="card-body">
             <h5 class="card-title text-center">{{ userinfo.user.username }}</h5>
             <p class="card-text">Email: {{ userinfo.user.email }}</p>
-            <p class="card-text">Phone: {{ userinfo.phone }}</p>
+            <p class="card-text" id="phone"> Phone: <input id="item-btn" type="button" value="Show phone"></p>
         </div>
         <ul class="list-group list-group-flush">
             <p class="card-text text-center" >List of Friends: </p>
@@ -23,10 +23,20 @@
                 <p class="card-text text-center">{{ usr_articles.title }}</p>
             {% endfor %}
         </ul>
-
+        {% if userinfo.user == request.user %}
         <div class="card-body">
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+            <p class="text-center"><a href="{% url 'webapp:user_update' userinfo.pk %}" class="card-link">Редактировать данные</a></p>
         </div>
+        {% endif %}
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        let phone = document.getElementById('item-btn');
+        let element = document.getElementById("phone");
+        phone.onclick = function() {
+            element.innerText = "Phone: {{ userinfo.phone }}";
+        }
+    </script>
 {% endblock %}
