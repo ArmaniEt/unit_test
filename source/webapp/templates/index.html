@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Posts{% endblock %}
+{% block menu %}
+    <li class="nav_item"><a href="{% url 'webapp:post_create' %}" class="nav-link">Добавить статью</a></li>
+{% endblock %}
+
+{% block content %}
+    {% for post in post_list %}
+        <div class="list-group mt-2">
+            <a href="#" class="list-group-item list-group-item-action">{{ post.title }} {{ post.author }} {{ post.date }}</a>
+        </div>
+    {% endfor %}
+{% endblock %}
