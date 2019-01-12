@@ -36,12 +36,12 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'post_update.html'
     form_class = PostForm
 
-    def dispatch(self, request, post_pk):
-        user = get_object_or_404(Post, pk=post_pk)
+    def dispatch(self, request,  *args, **kwargs):
+        user = get_object_or_404(Post, pk=kwargs.get('pk'))
         if user.author == request.user:
             return super().dispatch(request, *args, **kwargs)
         else:
-            return Http404
+            raise Http404
 
 
 class PostDetailView(LoginRequiredMixin, DetailView):
@@ -51,5 +51,8 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 
 def delete_view(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
-    post.delete()
-    return redirect('webapp:index')
+    if post.author == request.user:
+        post.delete()
+        return redirect('webapp:index')
+    else:
+        raise Http404
