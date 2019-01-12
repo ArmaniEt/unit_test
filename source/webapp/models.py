@@ -9,7 +9,7 @@ class UserInfo(models.Model):
     avatar = models.ImageField(verbose_name='Фотография', null=True, blank=True)
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 
 class Post(models.Model):

@@ -6,6 +6,7 @@ from webapp.models import UserInfo, Post
 
 class UserInfoInline(admin.StackedInline):
     model = UserInfo
+    filter_horizontal = ('friends',)
 
 
 class UserInfoAdmin(UserAdmin):
