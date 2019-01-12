@@ -11,7 +11,9 @@
         <div class="card-body">
             <p>{{ post.text }}</p>
             <footer class="blockquote-footer">{{ post.date }}</footer>
-            <a href="{% url 'webapp:post_update' post.pk %}" class="card-link">Редактировать</a>
+            {% if post.author == request.user %}
+                <a href="{% url 'webapp:post_update' post.pk %}" class="card-link">Редактировать</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

@@ -1,8 +1,10 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from webapp.models import Post
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from webapp.forms import PostForm
 from django.urls import reverse_lazy
+from django.shortcuts import redirect, get_object_or_404
+from django.http import Http404
 
 
 """
@@ -10,7 +12,7 @@ Creating CRUD for Posts
 """
 
 
-class PostListView(LoginRequiredMixin, ListView):
+class PostListView(ListView):
     template_name = 'index.html'
     model = Post
 
@@ -29,13 +31,25 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     template_name = 'post_update.html'
     form_class = PostForm
 
+    def dispatch(self, request, post_pk):
+        user = get_object_or_404(Post, pk=post_pk)
+        if user.author == request.user:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return Http404
+
 
 class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'post_view.html'
+
+
+def delete_view(request, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
+    post.delete()
+    return redirect('webapp:index')
