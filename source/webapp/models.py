@@ -16,7 +16,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100, verbose_name='Заголовок')
     text = models.TextField(max_length=1000, verbose_name='Текст')
     date = models.DateTimeField(auto_now_add=True, blank=True, verbose_name='Дата публикации')
-    author = models.ForeignKey(User, on_delete=models.PROTECT, max_length=200, verbose_name='Автор')
+    author = models.ForeignKey(User, on_delete=models.PROTECT, max_length=200, related_name='author', verbose_name='Автор')
 
     def __str__(self):
         return '%s %s' % (self.title, self.author)

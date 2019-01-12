@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Редактировать данные{% endblock %}
+{% block content %}
+     <form action="{% url 'webapp:user_update' form.instance.pk %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+           <p>{{ field.label_tag }}</p> <p>{{ field }}</p><br>
+        {% endfor %}
+        <div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+    </form>
+{% endblock %}

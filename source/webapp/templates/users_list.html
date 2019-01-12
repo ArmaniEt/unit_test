@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Users{% endblock %}
+{% block menu %}
+    <li class="nav_item"><a href="{% url 'webapp:post_create' %}" class="nav-link">Добавить статью</a></li>
+{% endblock %}
+
+{% block content %}
+    {% for user in userinfo_list %}
+        <div class="list-group mt-2">
+            <a href="{% url 'webapp:user_detail' user.pk %}" class="list-group-item list-group-item-action">{{ user.user.username }}</a>
+        </div>
+    {% endfor %}
+{% endblock %}
